@@ -36,10 +36,10 @@ const showingNavigationDropdown = ref(false);
                                         :active="route().current('service-reports.index') || route().current('service-reports.create')">
                                     Service Reports
                                 </NavLink>
-                                <NavLink href="#" >
+                                <NavLink  >
                                     Manage User
                                 </NavLink>
-                                <NavLink href="#" >
+                                <NavLink :href="route('reports.index')" :active="route().current('reports.index')">
                                     Reports
                                 </NavLink>
                             </div>

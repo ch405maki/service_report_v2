@@ -108,22 +108,26 @@
                                     </div>
 
                                     <div class="grid grid-cols-1">
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Problem/Concern: <br>
+                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Problem/Concern:
                                             <div v-html="form.problem_concern"></div>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1">
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Cause/s:</div> <br>
-                                        <div v-html="form.causes"></div>
+                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Cause/s:
+                                            <div v-html="form.causes"></div>
+                                        </div>
                                     </div>
                                     <div class="grid grid-cols-1">
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Action Taken:</div><br>
-                                        <div v-html="form.action_taken"></div>
+                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Action Taken:
+                                            <div v-html="form.action_taken"></div>
+                                        </div>
                                     </div>
                                     <div class="grid grid-cols-1">
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Remarks & Recommendation:</div><br>
-                                        <div v-html="form.remark_recommendation"></div>
+                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Remarks & Recommendation:
+                                            <div v-html="form.remark_recommendation"></div>
+                                        </div>
                                     </div>
+                                    
                                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
                                         <div class="bg-gray-200 p-[4px] border text-xs border-black">REPORTED BY: {{ form.reported_by }}</div>
                                         <div class="bg-gray-200 p-[4px] border text-xs border-black">DATE/TIME: {{ form.reported_date_time }}</div>
@@ -179,14 +183,17 @@
                                 <div class="grid grid-cols-12 gap-2 mt-2">
                                     <div class="col-span-8">
                                         <InputLabel for="department" value="Department" />
-                                        <TextInput
-                                            id="department"
-                                            v-model="form.department"
-                                            required
-                                            type="text"
-                                            class="mt-1 block w-full border border-gray-300 rounded-lg"
-                                            placeholder="Enter Department"
-                                        />
+                                        <select
+                                        id="department"
+                                        v-model="form.department"
+                                        required
+                                        class="mt-1 block w-full border border-gray-300 rounded-lg focus:border-slate-500 focus:ring-slate-500"
+                                        >
+                                        <option value="" disabled selected>Select Department</option>
+                                        <option value="Registrar">Registrar</option>
+                                        <option value="ITC">ITC</option>
+                                        <option value="Bursar">Bursar</option>
+                                        </select>
                                     </div>
                                     <div class="col-span-4">
                                         <InputLabel for="machine_code" value="Machine Code" />
@@ -278,7 +285,7 @@
                                             v-model="form.serviced_by"
                                             type="text"
                                             class="mt-1 block w-full border border-gray-300 rounded-lg"
-                                            placeholder="Serviced By (Optional)"
+                                            Readonly
                                         />
                                     </div>
                                     <div class="col-span-4">
@@ -321,18 +328,25 @@
 </template>
 
 <script setup>
-import { ref,  watch } from 'vue';
+import { ref, watch, defineProps, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import axios from 'axios';
+
+const props = defineProps({
+  userName: {
+    type: String,
+    required: true,
+  },
+});
+
 
 const form = useForm({
     job_order_no: '',
-    date: '',
+    date: new Date().toISOString().slice(0, 10),
     type: '',
     types: [],
     department: '',
@@ -343,7 +357,7 @@ const form = useForm({
     remark_recommendation: '',
     reported_by: '',
     reported_date_time: '',
-    serviced_by: '',
+    serviced_by: props.userName,
     serviced_date_time: '',
     approval: ''
     });

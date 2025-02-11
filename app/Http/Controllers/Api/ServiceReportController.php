@@ -17,7 +17,7 @@ class ServiceReportController extends BaseController
     public function index(): JsonResponse
     {
         // $reports = ServiceReport::where('user_id', auth()->id())->get();
-        $reports = ServiceReport::all();
+        $reports = ServiceReport::latest()->get();
         return $this->sendResponse(ServiceReportResource::collection($reports), 'Service reports retrieved successfully.');
     }
 
@@ -61,7 +61,6 @@ class ServiceReportController extends BaseController
         // Return a success response with the created report data
         return $this->sendResponse(new ServiceReportResource($report), 'Service report created successfully.');
     }
-
 
     /**
      * Display the specified resource.

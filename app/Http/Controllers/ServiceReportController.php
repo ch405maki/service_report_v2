@@ -18,4 +18,13 @@ class ServiceReportController extends Controller
             'report' => $report,
         ]);
     }
+
+    public function create()
+    {
+        $user = auth()->user()->name;
+    
+        return Inertia::render('ServiceReports/Create', [
+            'userName' => $user,
+        ]);
+    }
 }
