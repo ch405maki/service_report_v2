@@ -21,7 +21,6 @@ class ServiceReportController extends BaseController
         return $this->sendResponse(ServiceReportResource::collection($reports), 'Service reports retrieved successfully.');
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -37,6 +36,7 @@ class ServiceReportController extends BaseController
         $validator = Validator::make($input, [
             'job_order_no' => 'required|unique:service_report,job_order_no',
             'date' => 'required|date',
+            'type' => 'required',
             'department' => 'required',
             'machine_code' => 'required',
             'problem_concern' => 'required',
@@ -77,9 +77,6 @@ class ServiceReportController extends BaseController
         return $this->sendResponse(new ServiceReportResource($report), 'Service report retrieved successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, ServiceReport $report): JsonResponse
     {
         $input = $request->all();
@@ -87,6 +84,7 @@ class ServiceReportController extends BaseController
         $validator = Validator::make($input, [
             'job_order_no' => 'required|unique:service_report,job_order_no,' . $report->id,
             'date' => 'required|date',
+            'type' => 'required',
             'department' => 'required',
             'machine_code' => 'required',
             'problem_concern' => 'required',

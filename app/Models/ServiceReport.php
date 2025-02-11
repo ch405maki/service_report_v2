@@ -21,6 +21,7 @@ class ServiceReport extends Model
         'user_id',
         'job_order_no',
         'date',
+        'type',
         'department',
         'machine_code',
         'problem_concern',

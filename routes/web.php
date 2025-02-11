@@ -5,16 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\ServiceReportController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -30,9 +21,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/service-reports', function (){
-        return Inertia::render('ServiceReports/Index');
-    })->name('service-reports.index');
+    Route::get('/service-reports', function (){ return Inertia::render('ServiceReports/Index');})->name('service-reports.index');
+    Route::get('/service-reports/create', function (){ return Inertia::render('ServiceReports/Create');})->name('service-reports.create');
+    Route::get('/service-reports/view/{id}', [ServiceReportController::class, 'show'])->name('service-reports.view');
 });
 
 Route::middleware('auth')->group(function () {

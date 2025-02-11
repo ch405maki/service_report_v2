@@ -16,7 +16,7 @@ const showingNavigationDropdown = ref(false);
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
+                    <div class="flex justify-between h-12">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
@@ -32,8 +32,15 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('service-reports.index')" :active="route().current('service-reports.index')">
-                                    Service Report
+                                <NavLink :href="route('service-reports.index')" 
+                                        :active="route().current('service-reports.index') || route().current('service-reports.create')">
+                                    Service Reports
+                                </NavLink>
+                                <NavLink href="#" >
+                                    Manage User
+                                </NavLink>
+                                <NavLink href="#" >
+                                    Reports
                                 </NavLink>
                             </div>
                         </div>
@@ -141,7 +148,7 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-3 px-4 sm:px-3 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>

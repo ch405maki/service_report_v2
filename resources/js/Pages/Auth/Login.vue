@@ -1,34 +1,3 @@
-<script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-
-defineProps({
-    canResetPassword: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
-});
-
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
-};
-</script>
-
 <template>
     <GuestLayout>
         <Head title="Log in" />
@@ -92,3 +61,71 @@ const submit = () => {
         </form>
     </GuestLayout>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import Checkbox from '@/Components/Checkbox.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import { Head, Link, router } from '@inertiajs/vue3';
+
+defineProps({
+    canResetPassword: {
+        type: Boolean,
+    },
+    status: {
+        type: String,
+    },
+});
+
+const form = ref({
+    email: '',
+    password: '',
+    remember: false,
+    errors: {
+        email: '',
+        password: ''
+    },
+    processing: false,
+});
+
+const submit = async () => {
+    form.value.processing = true;
+    form.value.errors = { email: '', password: '' };
+
+    try {
+        const response = await axios.post('/api/login', {
+            email: form.value.email,
+            password: form.value.password,
+            remember: form.value.remember,
+        });
+
+        // If the response status is OK, proceed with the login logic
+        if (response.status === 200) {
+            // Store token and user data in localStorage
+            const { user, token } = response.data;
+            localStorage.setItem('auth_token', token);
+            localStorage.setItem('user', JSON.stringify(user));
+
+            // Set the Authorization header for future requests
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+            router.visit('/dashboard');
+        }
+    } catch (error) {
+        if (error.response && error.response.data.errors) {
+            // Set errors based on validation feedback from the backend
+            form.value.errors = error.response.data.errors;
+        } else {
+            // Handle other errors (e.g., network error)
+            console.error('Error logging in:', error);
+        }
+    } finally {
+        form.value.processing = false;
+    }
+};
+</script>

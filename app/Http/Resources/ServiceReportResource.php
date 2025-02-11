@@ -13,6 +13,7 @@ class ServiceReportResource extends JsonResource
             'id' => $this->id,
             'job_order_no' => $this->job_order_no,
             'date' => $this->date,
+            'type' => $this->type,
             'department' => $this->department,
             'machine_code' => $this->machine_code,
             'problem_concern' => $this->problem_concern,

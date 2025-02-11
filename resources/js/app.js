@@ -1,4 +1,3 @@
-// resources/js/app.js
 import './bootstrap';
 import '../css/app.css';
 
@@ -6,19 +5,12 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-// import axios from 'axios';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-// Setup Axios globally
-// axios.defaults.baseURL = 'http://127.0.0.1:8000';  // Set your base URL for API requests
-// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// axios.defaults.headers.common['Accept'] = 'application/json';
+// Import CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
-// Optional: Add Bearer token if available
-// if (localStorage.getItem('auth_token')) {
-//     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('auth_token')}`;
-// }
+const appName = 'Service Report';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -27,6 +19,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(CKEditor) // Register CKEditor globally
             .mount(el);
     },
     progress: {

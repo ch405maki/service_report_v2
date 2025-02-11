@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->string('job_order_no')->unique();
             $table->date('date');
+            $table->string('type'); 
             $table->string('department'); 
             $table->string('machine_code');
             $table->text('problem_concern');
