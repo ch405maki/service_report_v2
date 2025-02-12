@@ -22,13 +22,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/service-reports', function (){ return Inertia::render('ServiceReports/Index');})->name('service-reports.index');
-    Route::get('/service-reports/view/{id}', [ServiceReportController::class, 'show'])->name('service-reports.view');
-    Route::get('/service-reports/create', [ServiceReportController::class, 'create'])->name('service-reports.create');
+    Route::get('/service-reports', [ServiceReportController::class, 'index'])->name('service-reports.index');
+    Route::get('/service-reports/show/{id}', [ServiceReportController::class, 'show'])->name('service-reports.show');
+    Route::get('/service-reports/create/{id}', [ServiceReportController::class, 'create'])->name('service-reports.create');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/show/{reported_by}', [ReportController::class, 'show'])->name('reports.show');
 });
 
 Route::middleware('auth')->group(function () {

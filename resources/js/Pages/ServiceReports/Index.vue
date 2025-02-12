@@ -1,11 +1,11 @@
 <template>
-    <Head title="List" />
+    <Head title="Staff" />
   
     <AuthenticatedLayout>
       <template #header>
         <div class="flex justify-between items-center">
-          <h2 class="font-semibold text-xl text-gray-800 leading-tight">Service Reports</h2>
-          <a :href="route('service-reports.create')" class="bg-gray-800 hover:bg-gray-700 text-white px-[8px] py-[5px] rounded-lg">Create Service Report</a>
+          <h2 class="font-semibold text-xl text-gray-800 leading-tight">List of Staff</h2>
+          <a href="" class="bg-gray-800 hover:bg-gray-700 text-white px-[8px] py-[5px] rounded-lg">Create Service Report</a>
         </div>
       </template>
   
@@ -30,7 +30,7 @@
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                 </svg>
                 </div>
-                <input type="text" id="table-search" v-model="searchQuery" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-300 focus:border-gray-500" placeholder="Search for items">
+                <input type="text" id="table-search" v-model="searchQuery" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-300 focus:border-gray-500" placeholder="Search Staff">
             </div>
             </div>
           </div>
@@ -40,24 +40,22 @@
             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                <th scope="col" class="px-6 py-3 w-40">Job Order Number</th>
-                <th scope="col" class="px-6 py-3 w-24">Type</th>
-                <th scope="col" class="px-6 py-3 w-32">Date</th>
+                <th scope="col" class="px-6 py-3 w-24">Machine Code</th>
                 <th scope="col" class="px-6 py-3 w-32">Department</th>
-                <th scope="col" class="px-6 py-3 w-40">Reported By</th>
-                <th scope="col" class="px-6 py-3 w-40">Serviced By</th>
+                <th scope="col" class="px-6 py-3 w-32">History</th>
+                <th scope="col" class="px-6 py-3 w-40">Name</th>
                 <th scope="col" class="px-6 py-3 w-28">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="report in filteredReports" :key="report.id" class="bg-white border-b border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ report.job_order_no }}</th>
-                <td class="px-6 py-4 w-24">{{ report.type }}</td>
-                <td class="px-6 py-4 w-32">{{ report.date }}</td>
-                <td class="px-6 py-4 w-32">{{ report.department }}</td>
-                <td class="px-6 py-4 w-40"><i class="fa-solid fa-user"></i> {{ report.reported_by }}</td>
-                <td class="px-6 py-4 w-40"><i class="fa-solid fa-gear"></i> {{ report.serviced_by }}</td>
-                <td class="px-6 py-4 w-28"><a :href="route('service-reports.view', report.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a></td>
+              <tr v-for="staff in filteredStaffs" :key="staff.id" class="bg-white border-b border-gray-200">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ staff.machine_code }}</th>
+                <td class="px-6 py-4 w-32">{{ staff.department }}</td>
+                <td class="px-6 py-4 w-32"></td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ staff.name }}</th>
+                <td class="px-6 py-4 w-28">
+                  <a :href="route('service-reports.create', staff.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><i class="fa-solid fa-plus"></i> Create</a>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -68,73 +66,26 @@
   </template>
 
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
+import { Head } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
-// Define reactive variables
-const reports = ref([]);
-const searchQuery = ref('');
-const selectedFilter = ref('last7Days');
-const dropdownOpen = ref(false); 
-
-// Function to fetch service reports
-// Function to fetch service reports
-async function fetchServiceReports() {
-    try {
-        const token = localStorage.getItem('auth_token') || 'No token found';
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-        const response = await axios.get('/api/service-reports');
-        reports.value = response.data.data;
-    } catch (error) {
-        console.error('Error fetching service reports:', error);
-    }
-}
-
-// Computed property to handle filtering logic
-const filteredReports = computed(() => {
-  return reports.value
-    .filter(report => {
-      // Search filter
-      return report.job_order_no.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        report.department.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        report.reported_by.toLowerCase().includes(searchQuery.value.toLowerCase());
-    })
-    .filter(report => {
-      // Date range filter
-      const currentDate = new Date();
-      let startDate = new Date();
-
-      switch (selectedFilter.value) {
-        case 'lastDay':
-          startDate.setDate(currentDate.getDate() - 1);
-          break;
-        case 'last7Days':
-          startDate.setDate(currentDate.getDate() - 7);
-          break;
-        case 'last30Days':
-          startDate.setDate(currentDate.getDate() - 30);
-          break;
-        case 'lastMonth':
-          startDate.setMonth(currentDate.getMonth() - 1);
-          break;
-        case 'lastYear':
-          startDate.setFullYear(currentDate.getFullYear() - 1);
-          break;
-      }
-
-      return new Date(report.date) >= startDate;
-    });
+const props = defineProps({
+  staffs: { type: Array, required: true },
 });
 
-// Toggle dropdown visibility
-function toggleDropdown() {
-    dropdownOpen.value = !dropdownOpen.value;
-}
+// Search query input
+const searchQuery = ref("");
 
+// Computed property to filter staff list based on search query
+const filteredStaffs = computed(() => {
+  if (!searchQuery.value) return props.staffs;
 
-// Fetch the reports when the component is mounted
-onMounted(fetchServiceReports);
+  return props.staffs.filter(staff =>
+    staff.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    staff.machine_code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    staff.department.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+});
 </script>
+

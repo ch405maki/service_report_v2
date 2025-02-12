@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use App\Models\ServiceReport;
 use Validator;
 
-
 class ReportController extends Controller
 {
     public function index(): JsonResponse

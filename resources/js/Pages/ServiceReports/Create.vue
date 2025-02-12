@@ -183,17 +183,14 @@
                                 <div class="grid grid-cols-12 gap-2 mt-2">
                                     <div class="col-span-8">
                                         <InputLabel for="department" value="Department" />
-                                        <select
-                                        id="department"
-                                        v-model="form.department"
-                                        required
-                                        class="mt-1 block w-full border border-gray-300 rounded-lg focus:border-slate-500 focus:ring-slate-500"
-                                        >
-                                        <option value="" disabled selected>Select Department</option>
-                                        <option value="Registrar">Registrar</option>
-                                        <option value="ITC">ITC</option>
-                                        <option value="Bursar">Bursar</option>
-                                        </select>
+                                        <TextInput
+                                            id="department"
+                                            v-model="form.department"
+                                            required
+                                            type="text"
+                                            class="mt-1 block w-full border border-gray-300 rounded-lg"
+                                            Readonly
+                                        />
                                     </div>
                                     <div class="col-span-4">
                                         <InputLabel for="machine_code" value="Machine Code" />
@@ -203,7 +200,6 @@
                                             required
                                             type="text"
                                             class="mt-1 block w-full border border-gray-300 rounded-lg"
-                                            placeholder="Machine Code"
                                         />
                                     </div>
                                 </div>
@@ -213,7 +209,7 @@
                                         <div class="sm:col-span-12">
                                         <InputLabel for="type" value="Type" />
                                         <select
-                                        id="type"
+                                        id="type"   
                                         v-model="form.type"
                                         required
                                         @change="updateCheckboxes"
@@ -262,8 +258,9 @@
                                             required
                                             type="text"
                                             class="mt-1 block w-full border border-gray-300 rounded-lg"
-                                            placeholder="Enter Reporter Name"
+                                            Readonly
                                         />
+                                        
                                     </div>
                                     <div class="col-span-4">
                                         <InputLabel for="reported_date_time" value="Date and Time" />
@@ -336,30 +333,38 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const props = defineProps({
-  userName: {
-    type: String,
-    required: true,
-  },
-});
+    // Define the props received from the controller
+    const props = defineProps({
+    user: {
+        type: String,
+        required: true,
+    },
+    staff: {
+        type: Object,
+        required: true,
+    },
+    });
 
+    // Destructure the staff object to get individual properties
+    const { name, machine_code, department } = props.staff;
 
-const form = useForm({
-    job_order_no: '',
-    date: new Date().toISOString().slice(0, 10),
-    type: '',
-    types: [],
-    department: '',
-    machine_code: '',
-    problem_concern: '',
-    causes: '',
-    action_taken: '',
-    remark_recommendation: '',
-    reported_by: '',
-    reported_date_time: '',
-    serviced_by: props.userName,
-    serviced_date_time: '',
-    approval: ''
+    // Initialize the form with default values using `staff` data
+    const form = useForm({
+        job_order_no: '',
+        date: new Date().toISOString().slice(0, 10),
+        type: '',
+        types: [],
+        department: department, // Default to staff department
+        machine_code: machine_code, // Default to staff machine_code
+        problem_concern: '',
+        causes: '',
+        action_taken: '',
+        remark_recommendation: '',
+        reported_by: name, // Default to staff name
+        reported_date_time: '',
+        serviced_by: props.user, // Default to userName passed from controller
+        serviced_date_time: '',
+        approval: ''
     });
 
     
