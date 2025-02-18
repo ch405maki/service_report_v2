@@ -51,7 +51,10 @@
               <tr v-for="staff in filteredStaffs" :key="staff.id" class="bg-white border-b border-gray-200">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ staff.machine_code }}</th>
                 <td class="px-6 py-4 w-32">{{ staff.department }}</td>
-                <td class="px-6 py-4 w-32"></td>
+                <td class="px-6 py-4 font-medium text-gray-900  w-32">
+                  <a v-if="staff.service_reports_count > 0" :href="route('reports.show', staff.name)" class="text-blue-500 hover:underline">{{ staff.service_reports_count }} Browse</a>
+                  <span v-else class="text-green-500">No History</span>
+                </td>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ staff.name }}</th>
                 <td class="px-6 py-4 w-28">
                   <a :href="route('service-reports.create', staff.id)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"><i class="fa-solid fa-plus"></i> Create</a>

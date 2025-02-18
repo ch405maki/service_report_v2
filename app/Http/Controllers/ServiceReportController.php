@@ -11,7 +11,7 @@ class ServiceReportController extends Controller
 {
     public function index()
     {
-        $staffs = Staff::all();
+        $staffs = Staff::withCount('serviceReports')->get();
 
         // Return the Inertia page with the report data 
         return Inertia::render('ServiceReports/Index', [
@@ -30,23 +30,24 @@ class ServiceReportController extends Controller
     }
 
     public function create($id)
-{
-    // Get the current user's name
-    $user = auth()->user()->name;
+    {
+        // Get the current user's name
+        $user = auth()->user()->name;
 
-    // Retrieve the staff record with the given ID
-    $staff = Staff::where('id', $id)->first();
+        // Retrieve the staff record with the given ID
+        $staff = Staff::where('id', $id)->first();
 
-    // Pass the staff data (name, machine_code, department) to the Vue component
-    return Inertia::render('ServiceReports/Create', [
-        'user' => $user,
-        'staff' => [
-            'name' => $staff->name,
-            'machine_code' => $staff->machine_code,
-            'department' => $staff->department,
-        ],
-    ]);
-}
+        // Pass the staff data (name, machine_code, department) to the Vue component
+        return Inertia::render('ServiceReports/Create', [
+            'user' => $user,
+            'staff' => [
+                'id' => $staff->id,
+                'name' => $staff->name,
+                'machine_code' => $staff->machine_code,
+                'department' => $staff->department,
+            ],
+        ]);
+    }
 
 
 }

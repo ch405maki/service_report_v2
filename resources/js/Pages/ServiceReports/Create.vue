@@ -3,9 +3,9 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Service Report</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Service Report for: {{ form.reported_by }}</h2>
         </template>
-        <div class="flex flex-col min-h-screen bg-gray-100">
+        <div class="flex flex-col bg-gray-100">
             <main class="flex-grow">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="flex flex-col md:flex-row w-full justify-center">
@@ -346,10 +346,11 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     });
 
     // Destructure the staff object to get individual properties
-    const { name, machine_code, department } = props.staff;
+    const { id, name, machine_code, department } = props.staff;
 
     // Initialize the form with default values using `staff` data
     const form = useForm({
+        staff_id: id,
         job_order_no: '',
         date: new Date().toISOString().slice(0, 10),
         type: '',

@@ -16,4 +16,9 @@ class Staff extends Model
         'machine_code',
         'department',
     ];
+
+    public function serviceReports()
+    {
+        return $this->hasMany(ServiceReport::class); // Each Staff has many ServiceReports
+    }
 }

@@ -19,6 +19,7 @@ class ServiceReport extends Model
      */
     protected $fillable = [
         'user_id',
+        'staff_id',
         'job_order_no',
         'date',
         'type',
@@ -41,5 +42,10 @@ class ServiceReport extends Model
     public function user()
     {
         return $this->belongsTo(User::class); // Each ServiceReport belongs to a User
+    }
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class); // Each ServiceReport belongs to a Staff
     }
 }
