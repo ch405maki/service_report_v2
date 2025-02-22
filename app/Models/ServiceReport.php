@@ -34,6 +34,7 @@ class ServiceReport extends Model
         'serviced_by',
         'serviced_date_time',
         'approval',
+        'otherType',
     ];
 
     /**

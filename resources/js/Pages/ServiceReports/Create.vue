@@ -30,8 +30,7 @@
                                     </div>
                                     <!-- Type Checkboxes -->
                                     <div class="grid grid-cols-12">
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black col-span-2">Type</div>
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black col-span-10">
+                                        <div class="bg-gray-200 p-[4px] border text-xs border-black col-span-12">
                                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 ">   
                                             <label class="flex items-center space-x-2">
                                             <input 
@@ -103,6 +102,22 @@
                                             />
                                             <span>Change Part</span>
                                             </label>
+
+                                            <label class="flex items-center space-x-2">
+                                            <input 
+                                                type="checkbox" 
+                                                disabled
+                                                value="Other" 
+                                                v-model="form.types" 
+                                                class="border border-gray-300 rounded-lg"
+                                            />
+                                            <span>Other</span>
+                                            </label>
+                                        </div>
+                                        <div v-if="form.type === 'Other'">
+                                            <div class="bg-gray-200 p-[4px]  text-xs ">
+                                                Specify: <span class="font-bold">{{ form.otherType}}</span> 
+                                            </div>
                                         </div>
                                         </div>
                                     </div>
@@ -207,24 +222,34 @@
                                 <div class="grid grid-cols-12 gap-2 mt-2">
                                     <div class="col-span-12">
                                         <div class="sm:col-span-12">
-                                        <InputLabel for="type" value="Type" />
-                                        <select
-                                        id="type"   
-                                        v-model="form.type"
-                                        required
-                                        @change="updateCheckboxes"
-                                        class="mt-1 block w-full border border-gray-300 rounded-lg focus:border-slate-500 focus:ring-slate-500"
-                                        >
-                                        <option value="" disabled selected>Select a Type</option>
-                                        <option value="Under Warranty">Under Warranty</option>
-                                        <option value="Out Of Warranty">Out Of Warranty</option>
-                                        <option value="Not Our Unit">Not Our Unit</option>
-                                        <option value="Back Job">Back Job</option>
-                                        <option value="Check Up">Check Up</option>
-                                        <option value="For Pull Out">For Pull Out</option>
-                                        <option value="Change Part">Change Part</option>
-                                        </select>
-                                    </div>
+                                            <InputLabel for="type" value="Type" />
+                                            <select
+                                                id="type"
+                                                v-model="form.type"
+                                                required
+                                                @change="handleTypeChange"
+                                                class="mt-1 block w-full border border-gray-300 rounded-lg focus:border-slate-500 focus:ring-slate-500"
+                                            >
+                                                <option value="" disabled selected>Select a Type</option>
+                                                <option value="Under Warranty">Under Warranty</option>
+                                                <option value="Out Of Warranty">Out Of Warranty</option>
+                                                <option value="Not Our Unit">Not Our Unit</option>
+                                                <option value="Back Job">Back Job</option>
+                                                <option value="Check Up">Check Up</option>
+                                                <option value="For Pull Out">For Pull Out</option>
+                                                <option value="Change Part">Change Part</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+
+                                            <!-- Show text input if "Other" is selected -->
+                                            <input
+                                                v-if="form.type === 'Other'"
+                                                type="text"
+                                                v-model="form.otherType"
+                                                placeholder="Please specify"
+                                                class="mt-2 block w-full border border-gray-300 rounded-lg focus:border-slate-500 focus:ring-slate-500"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -365,7 +390,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
         reported_date_time: '',
         serviced_by: props.user, // Default to userName passed from controller
         serviced_date_time: '',
-        approval: ''
+        approval: '',
+        otherType: '',
     });
 
     

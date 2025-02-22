@@ -26,6 +26,7 @@ class ServiceReportResource extends JsonResource
             'serviced_date_time' => $this->serviced_date_time,
             'approval' => $this->approval,
             'staff_id' => $this->staff_id,
+            'otherType' => $this->otherType,
         ];
     }
 }

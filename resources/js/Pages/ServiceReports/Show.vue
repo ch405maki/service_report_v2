@@ -53,10 +53,7 @@
 
                             <!-- Type Checkboxes -->
                             <div class="grid grid-cols-12">
-                              <div class="  p-[4px] border text-xs border-black col-span-2">
-                                Type
-                              </div>
-                              <div class="  p-[4px] border text-xs border-black col-span-10">
+                              <div class="  p-[4px] border text-xs border-black col-span-12">
                                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
                                   <label class="flex items-center space-x-2">
                                     <input 
@@ -134,6 +131,22 @@
                                     />
                                     <span>Change Part</span>
                                   </label>
+
+                                  <label class="flex items-center space-x-2">
+                                    <input 
+                                      type="checkbox" 
+                                      disabled
+                                      value="Other" 
+                                      class="border border-gray-300"
+                                      :checked="report.type === 'Other'"
+                                    />
+                                    <span>Other</span>
+                                  </label>
+                                </div>
+                                <div v-if="report.type === 'Other'">
+                                    <div class="py-[6px]  text-xs ">
+                                        Specify: <span class="font-bold">{{ report.otherType}}</span> 
+                                    </div>
                                 </div>
                               </div>
                             </div>
@@ -192,7 +205,7 @@
                       <!-- End Report Form -->
 
                       <!-- Report Form -->
-                      <div class="w-full md:w-1/2 p-2 flex justify-start">
+                      <div class="w-full md:w-1/2 p-2">
                         <div class="w-full bg-white p-2">
                           <div class="flex-grow border border-black">
                             <div class="grid grid-cols-12 p-[4px]">
@@ -232,10 +245,7 @@
 
                             <!-- Type Checkboxes -->
                             <div class="grid grid-cols-12">
-                              <div class="  p-[4px] border text-xs border-black col-span-2">
-                                Type
-                              </div>
-                              <div class="  p-[4px] border text-xs border-black col-span-10">
+                              <div class="  p-[4px] border text-xs border-black col-span-12">
                                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
                                   <label class="flex items-center space-x-2">
                                     <input 
@@ -313,6 +323,22 @@
                                     />
                                     <span>Change Part</span>
                                   </label>
+
+                                  <label class="flex items-center space-x-2">
+                                    <input 
+                                      type="checkbox" 
+                                      disabled
+                                      value="Other" 
+                                      class="border border-gray-300"
+                                      :checked="report.type === 'Other'"
+                                    />
+                                    <span>Other</span>
+                                  </label>
+                                </div>
+                                <div v-if="report.type === 'Other'">
+                                    <div class="py-[6px]  text-xs ">
+                                        Specify: <span class="font-bold">{{ report.otherType}}</span> 
+                                    </div>
                                 </div>
                               </div>
                             </div>
@@ -414,11 +440,8 @@
 
                             <!-- Type Checkboxes -->
                             <div class="grid grid-cols-12">
-                              <div class="  pb-[8px] px-[4px] border text-xs border-black col-span-2">
-                                Type
-                              </div>
-                              <div class="  pb-[8px] px-[4px] border text-xs border-black col-span-10">
-                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+                              <div class="  pb-[8px] px-[4px] border text-xs border-black col-span-12">
+                                <div class="grid grid-cols-2 mt-[2px] sm:grid-cols-3 md:grid-cols-4">
                                   <label class="flex items-center space-x-2">
                                     <input 
                                       type="checkbox" 
@@ -495,6 +518,21 @@
                                     />
                                     <span>Change Part</span>
                                   </label>
+                                  <label class="flex items-center space-x-2">
+                                    <input 
+                                      type="checkbox" 
+                                      disabled
+                                      value="Other" 
+                                      class="border border-gray-300"
+                                      :checked="report.type === 'Other'"
+                                    />
+                                    <span>Other</span>
+                                  </label>
+                                  <div v-if="report.type === 'Other'">
+                                      <div class="py-[6px]  text-xs ">
+                                          Specify: <span class="font-bold">{{ report.otherType}}</span> 
+                                      </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -506,7 +544,7 @@
                               </div>
                             </div>
                             <div class="grid grid-cols-1">
-                              <div class="  pb-[8px] px-[4px] h-28 border text-xs border-black">
+                              <div class="  pb-[8px] px-[4px] h-24 border text-xs border-black">
                                 Cause/s: <br>
                                 <div v-html="report.causes"></div>
                               </div>
@@ -544,7 +582,7 @@
 
                             <div class="grid grid-cols-1">
                               <div class="  pb-[8px] px-[4px] border text-xs border-black">
-                                APPROVAL FOR REPLACEMENT/PURCHASE: <br>{{ report.approval }}
+                                APPROVAL FOR REPLACEMENT/PURCHASE: {{ report.approval }}
                               </div>
                             </div>
                           </div>
@@ -593,11 +631,8 @@
 
                             <!-- Type Checkboxes -->
                             <div class="grid grid-cols-12">
-                              <div class="  pb-[8px] px-[4px] border text-xs border-black col-span-2">
-                                Type
-                              </div>
-                              <div class="  pb-[8px] px-[4px] border text-xs border-black col-span-10">
-                                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+                              <div class="  pb-[8px] px-[4px] border text-xs border-black col-span-12">
+                                <div class="grid grid-cols-2 mt-[2px]  sm:grid-cols-3 md:grid-cols-4">
                                   <label class="flex items-center space-x-2">
                                     <input 
                                       type="checkbox" 
@@ -674,6 +709,21 @@
                                     />
                                     <span>Change Part</span>
                                   </label>
+                                  <label class="flex items-center space-x-2">
+                                    <input 
+                                      type="checkbox" 
+                                      disabled
+                                      value="Other" 
+                                      class="border border-gray-300"
+                                      :checked="report.type === 'Other'"
+                                    />
+                                    <span>Other</span>
+                                  </label>
+                                  <div v-if="report.type === 'Other'">
+                                      <div class="py-[6px]  text-xs ">
+                                          Specify: <span class="font-bold">{{ report.otherType}}</span> 
+                                      </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -685,7 +735,7 @@
                               </div>
                             </div>
                             <div class="grid grid-cols-1">
-                              <div class="  pb-[8px] px-[4px] h-28 border text-xs border-black">
+                              <div class="  pb-[8px] px-[4px] h-24 border text-xs border-black">
                                 Cause/s: <br>
                                 <div v-html="report.causes"></div>
                               </div>
@@ -723,7 +773,7 @@
 
                             <div class="grid grid-cols-1">
                               <div class="  pb-[8px] px-[4px] border text-xs border-black">
-                                APPROVAL FOR REPLACEMENT/PURCHASE: <br>{{ report.approval }}
+                                APPROVAL FOR REPLACEMENT/PURCHASE: {{ report.approval }}
                               </div>
                             </div>
                           </div>

@@ -49,6 +49,7 @@ class ServiceReportController extends BaseController
             'serviced_date_time' => 'nullable|date',
             'approval' => 'nullable',
             'staff_id' => 'required',
+            'otherType' => 'required',
         ]);
 
         // Return validation errors if validation fails
