@@ -24,10 +24,33 @@ class ReportController extends Controller
 
         //dd($reported_by);
 
-        $reports = ServiceReport::WHERE('reported_by', $reported_by)->get();
+        $reports = ServiceReport::WHERE('reported_by', $reported_by)->latest()->get();
 
         // Return the Inertia page with the report data
         return Inertia::render('Reports/Show', [
+            'reports' => $reports,
+        ]);
+    }
+
+    public function machine()
+    {
+        $reports = ServiceReport::orderByDesc('created_at')
+        ->get()->unique('machine_code');
+
+        // Return the Inertia page with the report data
+        return Inertia::render('Reports/Machine/Index', [
+            'reports' => $reports,
+        ]);
+    }
+
+    public function machine_show($machine_code){
+
+        //dd($reported_by);
+
+        $reports = ServiceReport::WHERE('machine_code', $machine_code)->latest()->get();
+
+        // Return the Inertia page with the report data
+        return Inertia::render('Reports/Machine/Show', [
             'reports' => $reports,
         ]);
     }

@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
       <template #header>
         <div class="flex justify-between items-center">
-          <h2 class="font-semibold text-xl text-gray-800 leading-tight">Service Reports</h2>
+          <h2 class="font-semibold text-xl text-gray-800 leading-tight">Machine History</h2>
           <!-- Search Bar -->
           <label for="table-search" class="sr-only">Search</label>
           <div class="relative">
@@ -25,21 +25,25 @@
             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                <th scope="col" class="px-6 py-3 w-40">Job Order Number</th>
-                <th scope="col" class="px-6 py-3 w-24">Machine Code</th>
-                <th scope="col" class="px-6 py-3 w-32">Department</th>
-                <th scope="col" class="px-6 py-3 w-40">Staff | Reported By</th>
-                <th scope="col" class="px-6 py-3 w-28">Action</th>
+                <th scope="col" class="px-6 py-3 w-40">Machine Code</th>
+                <th scope="col" class="px-6 py-3 w-40">Date</th>
+                <th scope="col" class="px-6 py-3 w-40">Problem</th>
+                <th scope="col" class="px-6 py-3 w-40">Causes</th>
+                <th scope="col" class="px-6 py-3 w-40">Action Taken</th>
+                <th scope="col" class="px-6 py-3 w-40">Remarks</th>
+                <th scope="col" class="px-6 py-3 w-40">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="report in filteredReports" :key="report.id" class="bg-white border-b border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ report.job_order_no }}</th>
-                <td class="px-6 py-4 w-24">{{ report.machine_code }}</td>
-                <td class="px-6 py-4 w-32">{{ report.department }}</td>
-                <td class="px-6 py-4 w-40"><i class="fa-solid fa-user"></i> {{ report.reported_by }}</td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ report.machine_code }}</th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ report.date }}</th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40" v-html="report.problem_concern"></th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40" v-html="report.causes"></th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40" v-html="report.action_taken"></th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40" v-html="report.remark_recommendation"></th>
                 <td class="px-6 py-4 w-28">
-                  <a :href="route('reports.show', report.reported_by)" class="font-medium text-blue-600 hover:underline"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
+                  <a :href="route('machine.show', report.machine_code)" class="font-medium text-blue-600 hover:underline"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
                 </td>
               </tr>
             </tbody>
@@ -71,7 +75,7 @@ const filteredReports = computed(() => {
 
   return props.reports.filter(report => {
     return [
-      report.job_order_no?.toLowerCase() || '',
+      report.machine_code?.toLowerCase() || '',
       report.type?.toLowerCase() || '',
       report.department?.toLowerCase() || '',
       report.reported_by?.toLowerCase() || '',
