@@ -26,3 +26,4 @@ Route::middleware(['auth:sanctum', 'throttle:unlimited'])->group(function () {
 });
 
 Route::post('/machines', [MachineController::class, 'store']);
+Route::put('/machines/{id}/assign-user', [MachineController::class, 'assignUser'])->name('machines.assignUser');

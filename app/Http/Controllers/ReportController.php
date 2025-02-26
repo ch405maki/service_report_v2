@@ -22,17 +22,24 @@ class ReportController extends Controller
         ]);
     }
 
-    public function show($reported_by){
+    public function show($reported_by)
+    {
+        // Fetch reports with machine details
+        $reports = ServiceReport::where('reported_by', $reported_by)
+                    ->with('machine') // Ensure a relationship with machines
+                    ->latest()
+                    ->get();
 
-        //dd($reported_by);
+        // Get the unique machine code (assuming one per reported_by)
+        $machine_code = $reports->isNotEmpty() ? $reports->first()->machine->code ?? 'No Machine Assigned' : 'No Machine Assigned';
 
-        $reports = ServiceReport::WHERE('reported_by', $reported_by)->latest()->get();
-
-        // Return the Inertia page with the report data
+        // Return the Inertia page with the report and machine data
         return Inertia::render('Reports/Show', [
             'reports' => $reports,
+            'machine_code' => $machine_code
         ]);
     }
+
 
     public function machine()
     {
@@ -60,13 +67,27 @@ class ReportController extends Controller
         if ($reports->isEmpty()) {
             return Inertia::render('Reports/Machine/Show', [
                 'reports' => [],
-                'machine_code' => null, // Handle empty case
+                'machine_code' => null,
             ]);
         }
     
         return Inertia::render('Reports/Machine/Show', [
             'reports' => $reports,
             'machine_code' => $reports->first()->machine->machine_code ?? 'No Machine Assigned',
+        ]);
+    }
+
+    public function inventory_pc()
+    {
+        // Get staff members who do not have a machine
+        $staff = Staff::doesntHave('machine')->get();
+
+        // Get all machines with their associated staff
+        $machines = Machine::with('staff')->get();
+
+        return Inertia::render('Reports/Inventory/Index', [
+            'staffList' => $staff,
+            'machines' => $machines
         ]);
     }
     

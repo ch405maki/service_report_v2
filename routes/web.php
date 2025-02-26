@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/service-reports/create/{id}', [ServiceReportController::class, 'create'])->name('service-reports.create');
 
     Route::get('/machine', [MachineController::class, 'index'])->name('machine.index');
+    Route::get('/machine/create', [MachineController::class, 'create'])->name('machine.create');
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,6 +42,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/machine/reports', [ReportController::class, 'machine'])->name('machine.report.index');
     Route::get('/machine/show/{machine_id}', [ReportController::class, 'machine_show'])->name('machine.show');
+    
+    Route::get('/inventory/reports', [ReportController::class, 'inventory_pc'])->name('inventory.report.index');
 });
 
 Route::middleware('auth')->group(function () {

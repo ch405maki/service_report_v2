@@ -15,7 +15,7 @@
                                 <div class=" overflow-x-auto">
                                     <div class="min-w-full inline-block align-middle">
                                         <div class="overflow-hidden ">
-                                            <table class=" min-w-full">
+                                            <table class="min-w-full">
                                                 <thead>
                                                     <tr class="bg-gray-50">
                                                         <th scope="col" class="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"> Number</th>

@@ -36,19 +36,81 @@ const showingNavigationDropdown = ref(false);
                                         :active="route().current('service-reports.index') || route().current('service-reports.create')">
                                     Service Reports
                                 </NavLink>
-                                <NavLink :href="route('staff.index')" 
-                                        :active="route().current('staff.index')">
-                                    Manage Staff
-                                </NavLink>
-                                <NavLink :href="route('machine.index')" :active="route().current('machine.index')">
-                                    Manage Machine
-                                </NavLink>
-                                <NavLink :href="route('reports.index')" :active="route().current('reports.index')">
-                                    Reports
-                                </NavLink>
-                                <NavLink :href="route('machine.report.index')" :active="route().current('machine.report.index')">
-                                    Machine Reports
-                                </NavLink>
+                                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                    <!-- Manage Dropdown -->
+                                    <div class="relative">
+                                        <Dropdown align="right" width="48">
+                                            <template #trigger>
+                                                <span class="inline-flex rounded-md">
+                                                    <button
+                                                        type="button"
+                                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    >
+                                                        Records
+                                                        <svg
+                                                            class="ms-2 -me-0.5 h-4 w-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 20 20"
+                                                            fill="currentColor"
+                                                        >
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </template>
+
+                                            <template #content>
+                                                <DropdownLink :href="route('staff.index')"> Manage Staff(s) </DropdownLink>
+                                                <DropdownLink :href="route('machine.index')"> Manage Pc's </DropdownLink>
+                                                <div class="border-b"></div>
+                                                <DropdownLink href="#">Equipment(s)</DropdownLink>
+                                            </template>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+                                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                <!-- Report Dropdown -->
+                                <div class="relative">
+                                    <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <span class="inline-flex rounded-md">
+                                                <button
+                                                    type="button"
+                                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                >
+                                                    Reports
+                                                    <svg
+                                                        class="ms-2 -me-0.5 h-4 w-4"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20"
+                                                        fill="currentColor"
+                                                    >
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </template>
+
+                                        <template #content>
+                                            <DropdownLink :href="route('reports.index')"> Service Report </DropdownLink>
+                                            <DropdownLink :href="route('machine.report.index')"> Machine History </DropdownLink>
+                                            <div class="border-b"></div>
+                                            <DropdownLink :href="route('inventory.report.index')">Inventory PC</DropdownLink>
+                                            <DropdownLink href="#">Inventory Equipment(s)</DropdownLink>
+                                            <div class="border-b"></div>
+                                            <DropdownLink href="#" class="text-red-500">Diposable Items</DropdownLink>
+                                        </template>
+                                    </Dropdown>
+                                </div>
+                            </div>
                             </div>
                         </div>
 

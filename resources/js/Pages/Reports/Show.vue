@@ -13,7 +13,7 @@
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
             </svg>
             </div>
-            <input type="text" id="table-search" v-model="searchQuery" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-300 focus:border-gray-500" placeholder="Search for items">
+            <input type="text" id="table-search" v-model="searchQuery" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-300 focus:border-gray-500" placeholder="Search Date">
         </div>
       </div>
     </template>
@@ -37,30 +37,35 @@
                         </div>
                       </div>
                       <div class="min-w-0 flex-1 py-0">
-                        <div class="text-md text-gray-500">
-                          <div>
-                            <a :href="route('service-reports.show', report.id)" class="font-medium text-gray-900 mr-2 hover:text-blue-800 hover:underline">{{ formatDate(report.date) }}</a>
-                            <a href="#"
-                              class="my-0.5 relative inline-flex items-center bg-white rounded-full border border-gray-300 px-3 py-0.5 text-sm">
-                              <div class="absolute flex-shrink-0 flex items-center justify-center">
-                                <span class="h-1.5 w-1.5 rounded-full bg-green-500" aria-hidden="true"></span>
-                              </div>
-                              <div class="ml-3.5 font-medium text-gray-900">{{report.type}}</div>
-                            </a>
+                          <div class="text-md text-gray-500">
+                            <div>
+                              <a :href="route('service-reports.show', report.id)" class="font-medium text-gray-900 mr-2 hover:text-blue-800 hover:underline">
+                                {{ formatDate(report.date) }}
+                              </a>
+                              <a href="#" class="my-0.5 relative inline-flex items-center bg-white rounded-full border border-gray-300 px-3 py-0.5 text-sm">
+                                <div class="absolute flex-shrink-0 flex items-center justify-center">
+                                  <span class="h-1.5 w-1.5 rounded-full bg-green-500" aria-hidden="true"></span>
+                                </div>
+                                <div class="ml-3.5 font-medium text-gray-900">{{ report.type }}</div>
+                              </a>
+                            </div>
+                            <span class="whitespace-nowrap text-sm">Reported By: <span class="uppercase text-gray-800">{{ report.reported_by }}</span></span>
+                            <br>
+                            <span class="whitespace-nowrap text-sm">Serviced By: <span class="uppercase text-gray-800">{{ report.serviced_by }}</span></span>
+                            <br>
+                            <span class="whitespace-nowrap text-sm">Machine Code: <span class="uppercase text-gray-800">{{ report.machine.machine_code }}</span></span>
                           </div>
-                          <span class="whitespace-nowrap text-sm">Serviced By: {{ report.serviced_by }}</span>
+                          <div class="mt-2 text-gray-700 text-xs">
+                            <h1 class="border-b font-bold text-gray-800 mb-2">Problem/Concern</h1>
+                            <p v-html="report.problem_concern"></p>
+                            <h1 class="border-b font-bold text-gray-800 mt-2 mb-2">Cause/s</h1>
+                            <p v-html="report.causes"></p>
+                            <h1 class="border-b font-bold text-gray-800 mt-2 mb-2">Action Taken</h1>
+                            <p v-html="report.action_taken"></p>
+                            <h1 class="border-b font-bold text-gray-800 mt-2 mb-2">Remarks & Recommendation</h1>
+                            <p v-html="report.remark_recommendation"></p>
+                          </div>
                         </div>
-                        <div class="mt-2 text-gray-700 text-sm">
-                          <h1 class="font-bold text-gray-500">Problem/Concern</h1>
-                          <p v-html="report.problem_concern"></p>
-                          <h1 class="font-bold text-gray-500 mt-2">Cause/s</h1>
-                          <p v-html="report.causes"></p>
-                          <h1 class="font-bold text-gray-500 mt-2">Action Taken</h1>
-                          <p v-html="report.action_taken"></p>
-                          <h1 class="font-bold text-gray-500 mt-2">Remarks & Recommendation</h1>
-                          <p v-html="report.remark_recommendation"></p>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </li>
