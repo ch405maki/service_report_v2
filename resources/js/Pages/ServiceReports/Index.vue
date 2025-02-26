@@ -49,7 +49,9 @@
             </thead>
             <tbody>
               <tr v-for="staff in filteredStaffs" :key="staff.id" class="bg-white border-b border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ staff.machine_code }}</th>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">
+                  <td>{{ staff.machine ? staff.machine.machine_code : 'No Machine Assigned' }}</td>
+                </th>
                 <td class="px-6 py-4 w-32">{{ staff.department }}</td>
                 <td class="px-6 py-4 font-medium text-gray-900  w-32">
                   <a v-if="staff.service_reports_count > 0" :href="route('reports.show', staff.name)" class="text-blue-500 hover:underline">{{ staff.service_reports_count }} Browse</a>
@@ -86,7 +88,7 @@ const filteredStaffs = computed(() => {
 
   return props.staffs.filter(staff =>
     staff.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-    staff.machine_code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    staff.machine.machine_code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
     staff.department.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });

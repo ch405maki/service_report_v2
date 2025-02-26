@@ -47,7 +47,7 @@
                                 Department: {{ report.department }}
                               </div>
                               <div class="  p-[4px] border text-xs border-black">
-                                Machine Code: {{ report.machine_code }}
+                                Machine Code: {{ report.machine.machine_code }}
                               </div>
                             </div>
 
@@ -239,7 +239,7 @@
                                 Department: {{ report.department }}
                               </div>
                               <div class="  p-[4px] border text-xs border-black">
-                                Machine Code: {{ report.machine_code }}
+                                Machine Code: {{ report.machine.machine_code }}
                               </div>
                             </div>
 

@@ -40,10 +40,13 @@ const showingNavigationDropdown = ref(false);
                                         :active="route().current('staff.index')">
                                     Manage Staff
                                 </NavLink>
+                                <NavLink :href="route('machine.index')" :active="route().current('machine.index')">
+                                    Manage Machine
+                                </NavLink>
                                 <NavLink :href="route('reports.index')" :active="route().current('reports.index')">
                                     Reports
                                 </NavLink>
-                                <NavLink :href="route('machine.index')" :active="route().current('machine.index')">
+                                <NavLink :href="route('machine.report.index')" :active="route().current('machine.report.index')">
                                     Machine Reports
                                 </NavLink>
                             </div>

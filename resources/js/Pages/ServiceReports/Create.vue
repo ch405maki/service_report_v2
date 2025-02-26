@@ -26,7 +26,9 @@
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="bg-gray-200 p-[4px] border text-xs border-black">Department: {{ form.department }}</div>
-                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">Machine Code: {{ form.machine_code }}</div>
+                                        <div class="bg-gray-200 p-[4px] border text-xs border-black">
+                                            Machine Code: {{ machine_code }}
+                                        </div>
                                     </div>
                                     <!-- Type Checkboxes -->
                                     <div class="grid grid-cols-12">
@@ -211,10 +213,10 @@
                                         <InputLabel for="machine_code" value="Machine Code" />
                                         <TextInput
                                             id="machine_code"
-                                            v-model="form.machine_code"
-                                            required
                                             type="text"
                                             class="mt-1 block w-full border border-gray-300 rounded-lg"
+                                            v-model="machine_code"
+                                            readonly
                                         />
                                     </div>
                                 </div>
@@ -371,7 +373,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     });
 
     // Destructure the staff object to get individual properties
-    const { id, name, machine_code, department } = props.staff;
+    const { id, name, machine_id, machine_code, department } = props.staff;
 
     // Initialize the form with default values using `staff` data
     const form = useForm({
@@ -380,36 +382,36 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
         date: new Date().toISOString().slice(0, 10),
         type: '',
         types: [],
-        department: department, // Default to staff department
-        machine_code: machine_code, // Default to staff machine_code
+        department: department, 
+        machine_id: machine_id, 
         problem_concern: '',
         causes: '',
         action_taken: '',
         remark_recommendation: '',
-        reported_by: name, // Default to staff name
+        reported_by: name,
         reported_date_time: '',
-        serviced_by: props.user, // Default to userName passed from controller
+        serviced_by: props.user,
         serviced_date_time: '',
         approval: '',
         otherType: '',
     });
 
+    console.log('Form Data:', form);
     
     const submitForm = async () => {
-        try {
-            const response = await axios.post('/api/service-reports', form);
-            alert('Service report created successfully!');
-            form.reset();
-        } catch (error) {
-            if (error.response?.data?.errors) {
-                for (const [field, messages] of Object.entries(error.response.data.errors)) {
-                    alert(`Error in ${field}: ${messages.join(', ')}`);
-                }
-            } else {
-                console.error('Error creating service report:', error);
-            }
-        }
-    };
+    console.log('Submitting Form:', form.data());
+
+    try {
+        const response = await axios.post('/api/service-reports', form.data(), {
+            withCredentials: true,
+        });
+        alert('Service report created successfully!');
+        form.reset();
+    } catch (error) {
+        console.error('Error creating service report:', error);
+    }
+};
+
 
 
     const updateCheckboxes = () => {

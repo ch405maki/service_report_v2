@@ -25,7 +25,6 @@
             <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                <th scope="col" class="px-6 py-3 w-40">Job Order Number</th>
                 <th scope="col" class="px-6 py-3 w-24">Machine Code</th>
                 <th scope="col" class="px-6 py-3 w-32">Department</th>
                 <th scope="col" class="px-6 py-3 w-40">Staff | Reported By</th>
@@ -34,8 +33,7 @@
             </thead>
             <tbody>
               <tr v-for="report in filteredReports" :key="report.id" class="bg-white border-b border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-40">{{ report.job_order_no }}</th>
-                <td class="px-6 py-4 w-24">{{ report.machine_code }}</td>
+                <td class="px-6 py-4 w-24">{{ report.machine?.machine_code ?? 'N/A' }}</td>
                 <td class="px-6 py-4 w-32">{{ report.department }}</td>
                 <td class="px-6 py-4 w-40"><i class="fa-solid fa-user"></i> {{ report.reported_by }}</td>
                 <td class="px-6 py-4 w-28">
@@ -80,6 +78,7 @@ const filteredReports = computed(() => {
       report.causes?.toLowerCase() || '',
       report.action_taken?.toLowerCase() || '',
       report.remark_recommendation?.toLowerCase() || '',
+      report.machine?.machine_code?.toLowerCase() || '',
     ].some(field => field.includes(query));
   });
 });

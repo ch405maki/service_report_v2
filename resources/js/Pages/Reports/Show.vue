@@ -104,16 +104,17 @@ if (!searchQuery.value.trim()) {
 }
 
 return props.reports.filter(report => {
-  const query = searchQuery.value.toLowerCase();
-  
-  return (
-    report.job_order_no?.toLowerCase().includes(query) ||
-    report.type?.toLowerCase().includes(query) ||
-    report.department?.toLowerCase().includes(query) ||
-    report.reported_by?.toLowerCase().includes(query) ||
-    report.serviced_by?.toLowerCase().includes(query)
-  );
-});
+    const query = searchQuery.value.toLowerCase();
+    
+    return (
+      report.job_order_no?.toLowerCase().includes(query) ||
+      report.type?.toLowerCase().includes(query) ||
+      report.department?.toLowerCase().includes(query) ||
+      report.reported_by?.toLowerCase().includes(query) ||
+      report.serviced_by?.toLowerCase().includes(query) ||
+      formatDate(report.date).toLowerCase().includes(query)
+    );
+  });
 });
 </script>
 

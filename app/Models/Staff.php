@@ -13,12 +13,16 @@ class Staff extends Model
 
     protected $fillable = [
         'name',
-        'machine_code',
         'department',
     ];
 
     public function serviceReports()
     {
         return $this->hasMany(ServiceReport::class); // Each Staff has many ServiceReports
+    }
+    
+    public function machine()
+    {
+        return $this->hasOne(Machine::class);
     }
 }

@@ -4,7 +4,9 @@
     <AuthenticatedLayout>
       <template #header>
         <div class="flex justify-between items-center">
-          <h2 class="font-semibold text-xl text-gray-800 leading-tight">Machine Code: <span class="underline">{{ reports[0].machine_code }}</span></h2>
+          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Machine Code: <span class="underline">{{ machine_code || 'No Machine Assigned' }}</span>
+          </h2>
           <!-- Search Bar -->
           <label for="table-search" class="sr-only">Search</label>
           <div class="relative">
@@ -79,7 +81,8 @@
   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
   
   const props = defineProps({
-  reports: { type: Array, required: true },
+    reports: { type: Array, required: true },
+    machine_code: { type: Array, required: true },
   });
   
   // Function to format date

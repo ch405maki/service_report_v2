@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\ServiceReportController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\StaffController;
+use App\Http\Controllers\Api\MachineController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -18,8 +19,10 @@ Route::controller(RegisterController::class)->group(function(){
     Route::post('login', 'login');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('service-reports', ServiceReportController::class);
+Route::resource('service-reports', ServiceReportController::class);
+Route::middleware(['auth:sanctum', 'throttle:unlimited'])->group(function () {
     Route::resource('reports', ReportController::class);
     Route::resource('staff', StaffController::class);
 });
+
+Route::post('/machines', [MachineController::class, 'store']);

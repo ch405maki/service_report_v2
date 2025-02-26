@@ -11,7 +11,10 @@ class StaffController extends Controller
     // Display a listing of staff
     public function index()
     {
-        return response()->json(Staff::all());
+        $staff = Staff::paginate(10); // Paginate results
+        return response()->json([
+            'staff' => $staff,
+        ], Response::HTTP_OK);
     }
 
     // Store a newly created staff in storage
@@ -19,7 +22,6 @@ class StaffController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'machine_code' => 'required|string|unique:staff|max:255',
             'department' => 'required|string|max:255',
         ]);
 
@@ -39,7 +41,6 @@ class StaffController extends Controller
     {
         $request->validate([
             'name' => 'sometimes|required|string|max:255',
-            'machine_code' => 'sometimes|required|string|unique:staff,machine_code,' . $staff->id,
             'department' => 'sometimes|required|string|max:255',
         ]);
 

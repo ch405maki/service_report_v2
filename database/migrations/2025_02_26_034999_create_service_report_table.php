@@ -1,26 +1,23 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('service_report', function (Blueprint $table) {
+        Schema::create('service_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
+            $table->foreignId('staff_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('machine_id')->constrained()->onDelete('cascade');
             $table->string('job_order_no')->unique();
             $table->date('date');
             $table->string('type'); 
+            $table->string('otherType')->nullable();
             $table->string('department'); 
-            $table->string('machine_code');
             $table->text('problem_concern');
             $table->text('causes')->nullable();
             $table->text('action_taken')->nullable(); 
@@ -39,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_report');
+        Schema::dropIfExists('service_reports');
     }
 };

@@ -26,19 +26,20 @@ class ServiceReportController extends BaseController
      */
     public function store(Request $request): JsonResponse
     {
+        //dd($request->all());
         // Get the request data
         $input = $request->all();
 
         // Add the authenticated user's ID to the input array
-        $input['user_id'] = auth()->id();
+        // $input['user_id'] = auth()->id();
 
         // Validate the input data
         $validator = Validator::make($input, [
-            'job_order_no' => 'required|unique:service_report,job_order_no',
+            'job_order_no' => 'required|unique:service_reports,job_order_no',
             'date' => 'required|date',
             'type' => 'required',
             'department' => 'required',
-            'machine_code' => 'required',
+            'machine_id' => 'required',
             'problem_concern' => 'required',
             'causes' => 'nullable',
             'action_taken' => 'nullable',
@@ -49,7 +50,7 @@ class ServiceReportController extends BaseController
             'serviced_date_time' => 'nullable|date',
             'approval' => 'nullable',
             'staff_id' => 'required',
-            'otherType' => 'required',
+            'otherType' => 'nullable',
         ]);
 
         // Return validation errors if validation fails
