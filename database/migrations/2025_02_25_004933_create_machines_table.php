@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('machines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('staff_id')->constrained()->onDelete('cascade'); // Ensures one machine per staff
+            $table->foreignId('staff_id')->nullable()->constrained()->onDelete('cascade'); // Ensures one machine per staff
             $table->string('machine_code')->unique();
             $table->ipAddress('ip')->nullable();
             $table->enum('status', ['active', 'inactive', 'maintenance'])->default('active');
